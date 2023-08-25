@@ -7,27 +7,42 @@ import {
 } from 'sequelize';
 import db from '.';
 
-class TeamsModelSequelize extends Model<InferAttributes<TeamsModelSequelize>,
-InferCreationAttributes<TeamsModelSequelize>> {
+class MatchesModelSequelize extends Model<InferAttributes<MatchesModelSequelize>,
+InferCreationAttributes<MatchesModelSequelize>> {
   declare id: CreationOptional<number>;
-  declare teamName: string;
+  declare homeTeamId: number;
+  declare homeTeamGoals: number;
+  declare awayTeamId: number;
+  declare awayTeamGoals: number;
+  declare inProgress: boolean;
 }
 
-TeamsModelSequelize.init({
+MatchesModelSequelize.init({
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
   },
-  teamName: {
-    type: DataTypes.STRING,
+  homeTeamId: {
+    type: DataTypes.INTEGER,
+  },
+  homeTeamGoals: {
+    type: DataTypes.INTEGER,
+  },
+  awayTeamId: {
+    type: DataTypes.INTEGER,
+  },
+  awayTeamGoals: {
+    type: DataTypes.INTEGER,
+  },
+  inProgress: {
+    type: DataTypes.BOOLEAN,
   },
 }, {
   sequelize: db,
-  modelName: 'teams',
+  modelName: 'matches',
   timestamps: false,
-  underscored: true,
 });
 
 /**
@@ -41,4 +56,4 @@ TeamsModelSequelize.init({
 // Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
 // Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
 
-export default TeamsModelSequelize;
+export default MatchesModelSequelize;
