@@ -10,24 +10,25 @@ export default {
         autoIncrement: true,
         primaryKey: true,
       },
-      home_team_id: {
+      homeTeamId: {
         type: DataTypes.INTEGER,
       },
-      home_team_goals: {
+      homeTeamGoals: {
         type: DataTypes.INTEGER,
       },
-      away_team_goals: {
+      awayTeamGoals: {
         type: DataTypes.INTEGER,
       },
-      away_team_id: {
+      awayTeamId: {
         type: DataTypes.INTEGER,
       },
-      in_progress: {
+      inProgress: {
         type: DataTypes.BOOLEAN,
       },
     });
   },
-  down(queryInterface: QueryInterface) {
-    return queryInterface.dropTable('matches');
-  },
+
+down(queryInterface: QueryInterface) {
+  return queryInterface.dropTable('matches');
+},
 };
