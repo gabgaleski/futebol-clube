@@ -2,10 +2,10 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
+import { allTeams } from './Mocks/Teams.mock';
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
-
+import TeamsModelSequelize from '../database/models/TeamsModelSequelize';
 import { Response } from 'superagent';
 
 chai.use(chaiHttp);
@@ -39,7 +39,14 @@ describe('Seu teste', () => {
   //   expect(...)
   // });
 
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  it('Testa se o endpoin GET /teams retorna todos os times corretamente', async () => {
+    sinon.stub(TeamsModelSequelize, 'findAll').resolves(allTeams as any);
+
+    const result = await chai.request(app).get('/teams');
+
+    const { body, status } = result;
+    
+    expect(status).to.be.equal(200);
+    expect(body).to.be.deep.equal(allTeams);
   });
 });
