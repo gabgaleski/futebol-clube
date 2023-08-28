@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
-import { allTeams } from './Mocks/Teams.mock';
+import { allTeams, oneTeam } from './Mocks/Teams.mock';
 
 import { app } from '../app';
 import TeamsModelSequelize from '../database/models/TeamsModelSequelize';
@@ -48,5 +48,16 @@ describe('Seu teste', () => {
     
     expect(status).to.be.equal(200);
     expect(body).to.be.deep.equal(allTeams);
+  });
+
+  it('Testa se o endpoint GET /teams/:id retorna um time corretamente', async () => {
+    sinon.stub(TeamsModelSequelize, 'findByPk').resolves(oneTeam as any);
+
+    const result = await chai.request(app).get('/teams/1');
+
+    const { body, status } = result;
+
+    expect(status).to.be.equal(200);
+    expect(body).to.be.deep.equal(oneTeam);
   });
 });

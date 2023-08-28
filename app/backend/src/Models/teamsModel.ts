@@ -9,4 +9,10 @@ export default class TeamsModel implements ICRUDModel<ITeams> {
     const result = await this.model.findAll();
     return result.map(({ id, teamName }) => ({ id, teamName }));
   }
+
+  async findOne(id: string): Promise<ITeams | null> {
+    const result = await this.model.findByPk(id);
+    if (!result) return null;
+    return result;
+  }
 }

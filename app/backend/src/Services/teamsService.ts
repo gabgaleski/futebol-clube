@@ -7,9 +7,16 @@ export default class TeamsService {
     private teamModel: ICRUDModel<ITeams> = new TeamsModel(),
   ) {}
 
-  public async findAll(): Promise<{ status: string, data: ITeams[] }> {
+  async findAll(): Promise<{ status: string, data: ITeams[] }> {
     const teams = await this.teamModel.findAll();
 
     return { status: 'SUCCESS', data: teams };
+  }
+
+  async findOne(id: string): Promise<{ status: string, data: ITeams | null }> {
+    const team = await this.teamModel.findOne(id);
+    if (!team) return { status: 'NOT_FOUND', data: null };
+
+    return { status: 'SUCCESS', data: team };
   }
 }

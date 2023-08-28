@@ -13,6 +13,12 @@ const allTeams = [
   },
 ]
 
+const oneTeam = {
+  id: 1,
+  teamName: "Avaí/Kindermann"
+}
+
 export {
-  allTeams
+  allTeams,
+  oneTeam
 };
