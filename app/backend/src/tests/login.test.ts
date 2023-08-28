@@ -5,7 +5,8 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import UsersModelSequelize from '../database/models/UsersModelSequelize';
-import { token, loginSuccess } from './Mocks/Login.mock';
+import { token, loginSuccess, loginList } from './Mocks/Login.mock';
+import JWT from '../utils/JWT';
 
 chai.use(chaiHttp);
 
@@ -14,8 +15,12 @@ const { expect } = chai;
 describe('Seu teste', () => {
 
   it('Testa se no endpoin POST /login é possivel logar', async () => {
-    
+    sinon.stub(UsersModelSequelize, 'findOne').resolves(loginList as any);
+    sinon.stub(JWT, 'sign').returns(token);
+    const res = await chai.request(app).post('/login').send(loginSuccess);
 
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.be.deep.equal({ token });
   });
 
 });
