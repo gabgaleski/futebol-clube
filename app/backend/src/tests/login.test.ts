@@ -31,4 +31,27 @@ describe('Seu teste', () => {
     expect(res.body).to.be.deep.equal({ message: 'All fields must be filled' });
   });
 
+  it('Testa se no endpoint POST /login nao é possivel entrar com email invalido', async () => {
+      
+    sinon.stub(UsersModelSequelize, 'findOne').resolves(loginList as any);
+
+      const res = await chai.request(app).post('/login').send({email: 'emailinvalido', password: '123456'});
+  
+      expect(res.status).to.be.equal(401);
+      expect(res.body).to.be.deep.equal({ message: 'Invalid email or password' });
+  });
+
+  it('Testa se é possivel dar GET no endpoint /login/role', async () => {
+    sinon.stub(UsersModelSequelize, 'findOne').resolves(loginList as any);
+    sinon.stub(JWT, 'verify').returns(token);
+    const res = await chai.request(app).get('/login/role').set('authorization', `Bearer ${token}`);
+
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.be.deep.equal({ role: 'admin' });
+  })
+
+  afterEach(() => {
+    sinon.restore();
+  });
+
 });
