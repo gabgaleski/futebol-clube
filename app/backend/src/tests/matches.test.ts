@@ -22,7 +22,14 @@ describe('Seu teste', () => {
     expect(response.body).to.be.deep.equal(matchesMock);
   });
 
+  it('Testa se a rota GET /matches?inProgress=false retorna lista de partidas em andamento', async () => {
+    sinon.stub(MatchesModelSequelize, 'findAll').resolves(matchesMock as any);
 
+    const response = await chai.request(app).get('/matches?inProgress=false');
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal(matchesMock);
+  });
   afterEach(() => {
     sinon.restore();
   });

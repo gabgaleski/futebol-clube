@@ -15,4 +15,15 @@ export default class MatchesModel implements ICRUDMatches<IMatches> {
     });
     return result;
   }
+
+  async findAllInProgress(inProgress: string): Promise<IMatches[]> {
+    const result = await this.model.findAll({
+      where: { inProgress: inProgress === 'true' },
+      include: [
+        { model: TeamsModelSequelize, as: 'homeTeam', attributes: { exclude: ['id'] } },
+        { model: TeamsModelSequelize, as: 'awayTeam', attributes: { exclude: ['id'] } },
+      ],
+    });
+    return result;
+  }
 }
