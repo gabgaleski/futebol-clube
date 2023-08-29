@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import MatchesModelSequelize from '../database/models/MatchesModelSequelize';
-import JWT from '../utils/JWT';
+import { matchesMock } from './Mocks/Matches.mock';
 
 chai.use(chaiHttp);
 
@@ -13,13 +13,13 @@ const { expect } = chai;
 
 describe('Seu teste', () => {
 
-  it('Testa se no endpoin POST /login é possivel logar', async () => {
-    sinon.stub(UsersModelSequelize, 'findOne').resolves(loginList as any);
-    sinon.stub(JWT, 'sign').returns(token);
-    const res = await chai.request(app).post('/login').send(loginSuccess);
+  it('Testa se a rota GET /matches retorna lista de partidas', async () => {
+    sinon.stub(MatchesModelSequelize, 'findAll').resolves(matchesMock as any);
 
-    expect(res.status).to.be.equal(200);
-    expect(res.body).to.be.deep.equal({ token });
+    const response = await chai.request(app).get('/matches');
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal(matchesMock);
   });
 
 
