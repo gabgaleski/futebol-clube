@@ -17,4 +17,9 @@ export default class LoginService {
     const token = JWT.sign({ email });
     return { status: 'SUCCESSFUL', data: { token } };
   }
+
+  async getRole(token: IUsers) {
+    const user = await this.teamModel.login(token.email);
+    return { status: 'SUCCESSFUL', data: { role: user?.role } };
+  }
 }

@@ -12,4 +12,10 @@ export default class LoginController {
     if (token.status === 'UNAUTHORIZED') return res.status(401).json(token.data);
     return res.status(200).json(token.data);
   }
+
+  async getRole(req: Request, res: Response) {
+    const { token } = req.body;
+    const role = await this.loginService.getRole(token);
+    return res.status(200).json(role.data);
+  }
 }

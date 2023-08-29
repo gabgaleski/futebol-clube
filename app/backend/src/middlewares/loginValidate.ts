@@ -24,6 +24,7 @@ export default class LoginValidate {
     const tokne = LoginValidate.extractToken(authorization);
 
     const tokenValidate = JWT.verify(tokne);
+    req.body.token = tokenValidate;
     if (tokenValidate === 'Token must be a valid token') {
       return res.status(401).json({ message: tokenValidate });
     }

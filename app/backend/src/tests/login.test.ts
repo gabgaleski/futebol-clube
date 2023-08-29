@@ -23,4 +23,12 @@ describe('Seu teste', () => {
     expect(res.body).to.be.deep.equal({ token });
   });
 
+  it('Testa se no endpoin POST /login nao é possivel entrar com email faltando', async () => {
+
+    const res = await chai.request(app).post('/login').send({email: ''});
+
+    expect(res.status).to.be.equal(400);
+    expect(res.body).to.be.deep.equal({ message: 'All fields must be filled' });
+  });
+
 });
