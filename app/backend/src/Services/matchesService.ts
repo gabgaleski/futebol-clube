@@ -2,6 +2,7 @@ import ICRUDMatches from '../Interfaces/ICRUDMatches';
 import IMatches from '../Interfaces/IMatches';
 import MatchesModel from '../Models/matchesModel';
 import IMatchesUpdate from '../Interfaces/IMatchesUpdate';
+import ICreateMatch from '../Interfaces/ICreateMatch';
 
 export default class MatchesService {
   constructor(
@@ -28,5 +29,10 @@ export default class MatchesService {
     : Promise<{ status: string, data: { message:string } }> {
     const updatedMatch = await this.matchModel.update(id, match);
     return { status: 'SUCCESS', data: updatedMatch };
+  }
+
+  async create(match: ICreateMatch): Promise<{ status: string, data: IMatches }> {
+    const newMatch = await this.matchModel.create(match);
+    return { status: 'SUCCESS', data: newMatch };
   }
 }
