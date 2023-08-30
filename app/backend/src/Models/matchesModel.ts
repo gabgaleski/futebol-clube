@@ -2,6 +2,7 @@ import MatchesModelSequelize from '../database/models/MatchesModelSequelize';
 import ICRUDMatches from '../Interfaces/ICRUDMatches';
 import IMatches from '../Interfaces/IMatches';
 import TeamsModelSequelize from '../database/models/TeamsModelSequelize';
+import IMatchesUpdate from '../Interfaces/IMatchesUpdate';
 
 export default class MatchesModel implements ICRUDMatches<IMatches> {
   private model = MatchesModelSequelize;
@@ -30,5 +31,10 @@ export default class MatchesModel implements ICRUDMatches<IMatches> {
   async updateMatch(id: string): Promise<{ message: string }> {
     await this.model.update({ inProgress: false }, { where: { id } });
     return { message: 'Finished' };
+  }
+
+  async update(id: string, match: IMatchesUpdate): Promise<{ message: string }> {
+    await this.model.update(match, { where: { id } });
+    return { message: 'OK' };
   }
 }

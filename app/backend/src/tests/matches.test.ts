@@ -42,6 +42,17 @@ describe('Seu teste', () => {
     expect(response.body).to.be.deep.equal({ message: 'Finished' });
   });
 
+  it('Testa se é possivel realizar update de uma partida', async () => {
+    sinon.stub(MatchesModelSequelize, 'update').resolves();
+    sinon.stub(JWT, 'verify').returns('1234');
+
+    const response = await chai.request(app).patch('/matches/1').set('authorization', `Bearer 1234`).send({ homeTeamScore: 1, awayTeamScore: 2 })
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal({ message: 'OK' });
+
+  });
+
   afterEach(() => {
     sinon.restore();
   });
