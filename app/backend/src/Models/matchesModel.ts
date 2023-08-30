@@ -26,4 +26,9 @@ export default class MatchesModel implements ICRUDMatches<IMatches> {
     });
     return result;
   }
+
+  async updateMatch(id: string): Promise<{ message: string }> {
+    await this.model.update({ inProgress: false }, { where: { id } });
+    return { message: 'Finished' };
+  }
 }

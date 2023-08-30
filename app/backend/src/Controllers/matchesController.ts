@@ -16,4 +16,10 @@ export default class MatchesController {
     const matches = await this.matchesService.findAll();
     res.status(200).json(matches.data);
   }
+
+  async updateMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const match = await this.matchesService.updateMatch(id);
+    res.status(200).json(match.data);
+  }
 }

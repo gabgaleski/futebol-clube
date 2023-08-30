@@ -13,7 +13,7 @@ const matchesMock = [
         teamName: "Grêmio"
       }
     },
-  ]
+  ];
 
   export {
     matchesMock

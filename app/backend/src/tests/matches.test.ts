@@ -6,6 +6,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import MatchesModelSequelize from '../database/models/MatchesModelSequelize';
 import { matchesMock } from './Mocks/Matches.mock';
+import JWT from '../utils/JWT';
 
 chai.use(chaiHttp);
 
@@ -30,6 +31,17 @@ describe('Seu teste', () => {
     expect(response.status).to.be.equal(200);
     expect(response.body).to.be.deep.equal(matchesMock);
   });
+  
+  it('Testa se é possivel atualizar o status de uma partida', async () => {
+    sinon.stub(MatchesModelSequelize, 'update').resolves();
+    sinon.stub(JWT, 'verify').returns('1234');
+
+    const response = await chai.request(app).patch('/matches/1/finish').set('authorization', `Bearer 1234`)
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal({ message: 'Finished' });
+  });
+
   afterEach(() => {
     sinon.restore();
   });
