@@ -31,8 +31,16 @@ const resultCreateMatch = {
   inProgress: true
 }
 
+const errorMatch = {
+  homeTeamId: 1,
+  awayTeamId: 1,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+}
+
   export {
     matchesMock,
     createMatch,
-    resultCreateMatch
+    resultCreateMatch,
+    errorMatch
   };

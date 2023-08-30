@@ -39,7 +39,12 @@ export default class MatchesModel implements ICRUDMatches<IMatches> {
     return { message: 'OK' };
   }
 
-  async create(match: ICreateMatch): Promise<IMatches> {
+  async create(match: ICreateMatch): Promise<IMatches | null> {
+    const { homeTeamId, awayTeamId } = match;
+    const homeTeam = await TeamsModelSequelize.findByPk(homeTeamId);
+    const awayTeam = await TeamsModelSequelize.findByPk(awayTeamId);
+    if (!homeTeam?.dataValues || !awayTeam?.dataValues) return null;
+
     const allInfos = {
       ...match,
       inProgress: true,

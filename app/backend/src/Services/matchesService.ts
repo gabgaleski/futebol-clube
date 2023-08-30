@@ -31,8 +31,9 @@ export default class MatchesService {
     return { status: 'SUCCESS', data: updatedMatch };
   }
 
-  async create(match: ICreateMatch): Promise<{ status: string, data: IMatches }> {
+  async create(match: ICreateMatch): Promise<{ status: string, data: IMatches | null }> {
     const newMatch = await this.matchModel.create(match);
+    if (!newMatch) return { status: 'ERROR', data: null };
     return { status: 'SUCCESS', data: newMatch };
   }
 }

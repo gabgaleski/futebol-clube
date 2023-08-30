@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import MatchesModelSequelize from '../database/models/MatchesModelSequelize';
-import { matchesMock, createMatch, resultCreateMatch } from './Mocks/Matches.mock';
+import { matchesMock, createMatch, resultCreateMatch, errorMatch } from './Mocks/Matches.mock';
 import JWT from '../utils/JWT';
 
 chai.use(chaiHttp);
@@ -53,13 +53,41 @@ describe('Seu teste', () => {
 
   });
 
-  it('Testa se é possivel criar uma partida', async () => {
+  it('Testa se é falha ao tentar criar um time sem id no banco de dados', async () => {
     sinon.stub(MatchesModelSequelize, 'create').resolves(resultCreateMatch as any);
     sinon.stub(JWT, 'verify').returns('1234');
+
+
+    const response = await chai.request(app).post('/matches').set('authorization', `Bearer 1234`).send(createMatch)
+
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.deep.equal({message: 'There is no team with such id!'});
+  });
+
+  it('Testa se retorna erro ao tentar criar partida com times iguais', async () => {
+    sinon.stub(MatchesModelSequelize, 'create').resolves(null as any);
+    sinon.stub(JWT, 'verify').returns('1234');
+
+    const response = await chai.request(app).post('/matches').set('authorization', `Bearer 1234`).send(errorMatch)
+
+    expect(response.status).to.be.equal(422);
+    expect(response.body).to.be.deep.equal({ message: 'It is not possible to create a match with two equal teams' });
+  })
+
+  it('Testa se é possivel criar uma partida', async () => {
+    sinon.stub(MatchesModelSequelize, 'create').resolves({dataValues: {id: 1}} as any);
+    sinon.stub(JWT, 'verify').returns('1234');
+    sinon.stub(MatchesModelSequelize, 'findByPk')
+    .onFirstCall()
+    .resolves({dataValues: {id: 16}} as any)
+    .onSecondCall()
+    .resolves({dataValues: {id: 8}} as any);
 
     const response = await chai.request(app).post('/matches').set('authorization', `Bearer 1234`).send(createMatch)
 
     expect(response.status).to.be.equal(201);
+    expect(response.body).to.be.deep.equal({id: 1});
+
   });
 
   afterEach(() => {

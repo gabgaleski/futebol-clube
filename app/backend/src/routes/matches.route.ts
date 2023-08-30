@@ -1,6 +1,7 @@
 import { Request, Router, Response } from 'express';
 import MatchesController from '../Controllers/matchesController';
 import LoginValidate from '../middlewares/loginValidate';
+import MatchValidate from '../middlewares/matchValidate';
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.patch(
 router.post(
   '/',
   LoginValidate.validateToken,
+  MatchValidate.validateFields,
   (req: Request, res: Response) => matchesController.create(req, res),
 );
 export default router;

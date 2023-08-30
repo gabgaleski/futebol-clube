@@ -6,5 +6,5 @@ export default interface ICRUDMatches<T> {
   findAllInProgress(inProgress: string): Promise<T[]>;
   updateMatch(id: string): Promise<{ message: string }>;
   update(id: string, match: IMatchesUpdate): Promise<{ message: string }>;
-  create(match: ICreateMatch): Promise<T>;
+  create(match: ICreateMatch): Promise<T | null>;
 }

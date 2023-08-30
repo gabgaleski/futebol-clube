@@ -31,6 +31,7 @@ export default class MatchesController {
 
   async create(req: Request, res: Response) {
     const match = await this.matchesService.create(req.body);
+    if (!match.data) return res.status(404).json({ message: 'There is no team with such id!' });
     res.status(201).json(match.data);
   }
 }
