@@ -34,7 +34,7 @@ export default class LeaderboardModel implements ICRUDLeaderboard<ILeaderboard> 
     const getLeaderboard = await teams.map(async (team) => {
       const matches = await this.model.findAll({
         where: {
-          homeTeamId: team.id,
+          awayTeamId: team.id,
           inProgress: false,
         },
       });
