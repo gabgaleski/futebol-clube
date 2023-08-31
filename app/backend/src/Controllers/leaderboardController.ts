@@ -10,4 +10,9 @@ export default class LeaderboardController {
     const teams = await this.leaderboardService.findAll();
     res.status(200).json(teams.data);
   }
+
+  async findAllAway(_req: Request, res: Response) {
+    const teams = await this.leaderboardService.findAllAway();
+    res.status(200).json(teams.data);
+  }
 }

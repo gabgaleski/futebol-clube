@@ -12,4 +12,9 @@ export default class LeaderboardService {
 
     return { status: 'SUCCESS', data: teams };
   }
+
+  async findAllAway(): Promise<{ status: string, data: ILeaderboard[] }> {
+    const teams = await this.teamModel.findAll();
+    return { status: 'SUCCESS', data: teams };
+  }
 }
