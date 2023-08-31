@@ -37,6 +37,17 @@ describe('Seu teste', () => {
 
   });
 
+  it('Testa se a rota GET /leaderboard retorna lista', async () => {
+    sinon.stub(TeamsModelSequelize, 'findAll').resolves(mockTeam as any);
+    sinon.stub(MatchesModelSequelize, 'findAll').resolves(mockReturn as any);
+
+    const response = await chai.request(app).get('/leaderboard');
+
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.an('array');
+
+  });
+
   afterEach(() => {
     sinon.restore();
   });

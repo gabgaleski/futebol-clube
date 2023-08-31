@@ -126,4 +126,32 @@ const orderLeaderboard = (leaderboard: ILeaderboard[]) => {
   return sortLeader;
 };
 
-export { resultHome, resultAway, orderLeaderboard };
+const generalCalculate = (home: ILeaderboard, away: ILeaderboard) => {
+  const newTeam = { ...teamCreate };
+  newTeam.name = home.name;
+  newTeam.totalPoints = home.totalPoints + away.totalPoints;
+  newTeam.totalGames = home.totalGames + away.totalGames;
+  newTeam.totalVictories = home.totalVictories + away.totalVictories;
+  newTeam.totalDraws = home.totalDraws + away.totalDraws;
+  newTeam.totalLosses = home.totalLosses + away.totalLosses;
+  newTeam.goalsFavor = home.goalsFavor + away.goalsFavor;
+  newTeam.goalsOwn = home.goalsOwn + away.goalsOwn;
+  newTeam.goalsBalance = newTeam.goalsFavor - newTeam.goalsOwn;
+  newTeam.efficiency = Number(((newTeam.totalPoints / (newTeam.totalGames * 3)) * 100)
+    .toFixed(2));
+  return newTeam;
+};
+
+const resultGeneral = (home: ILeaderboard[], away: ILeaderboard[]) => {
+  const newArray: ILeaderboard[] = [];
+  home.forEach((team) => {
+    away.forEach((teamAway) => {
+      if (team.name === teamAway.name) {
+        newArray.push(generalCalculate(team, teamAway));
+      }
+    });
+  });
+  return newArray;
+};
+
+export { resultHome, resultAway, orderLeaderboard, resultGeneral };
