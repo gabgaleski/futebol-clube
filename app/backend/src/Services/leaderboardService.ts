@@ -14,7 +14,7 @@ export default class LeaderboardService {
   }
 
   async findAllAway(): Promise<{ status: string, data: ILeaderboard[] }> {
-    const teams = await this.teamModel.findAll();
+    const teams = await this.teamModel.findAllAway();
     return { status: 'SUCCESS', data: teams };
   }
 }

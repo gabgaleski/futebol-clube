@@ -1,3 +1,4 @@
+import ILeaderboard from '../Interfaces/ILeaderboard';
 import IMatches from '../Interfaces/IMatches';
 
 const teamCreate = {
@@ -91,23 +92,38 @@ const awayTotalPoints = (matches: IMatches[]) => {
 };
 
 const resultHome = (name: string, matches: IMatches[]) => {
-  if (teamCreate.name === name) teamReset();
+  if (teamCreate.name !== name) teamReset();
   teamCreate.name = name;
   teamCreate.totalGames += 1;
   homeTotalPoints(matches);
   teamCreate.goalsBalance = teamCreate.goalsFavor - teamCreate.goalsOwn;
-  teamCreate.efficiency = Number((teamCreate.totalPoints / (teamCreate.totalGames * 3)) * 100);
+  teamCreate.efficiency = Number(((teamCreate.totalPoints / (teamCreate.totalGames * 3)) * 100)
+    .toFixed(2));
   return teamCreate;
 };
 
 const resultAway = (name: string, matches: IMatches[]) => {
-  if (teamCreate.name === name) teamReset();
+  if (teamCreate.name !== name) teamReset();
   teamCreate.name = name;
   teamCreate.totalGames += 1;
   awayTotalPoints(matches);
   teamCreate.goalsBalance = teamCreate.goalsFavor - teamCreate.goalsOwn;
-  teamCreate.efficiency = Number((teamCreate.totalPoints / (teamCreate.totalGames * 3)) * 100);
+  teamCreate.efficiency = Number(((teamCreate.totalPoints / (teamCreate.totalGames * 3)) * 100)
+    .toFixed(2));
   return teamCreate;
 };
 
-export { resultHome, resultAway };
+const orderLeaderboard = (leaderboard: ILeaderboard[]) => {
+  const sortLeader = leaderboard.sort((a, b) => {
+    if (a.totalPoints === b.totalPoints) {
+      if (a.goalsBalance === b.goalsBalance) {
+        return b.goalsFavor - a.goalsFavor;
+      }
+      return b.goalsBalance - a.goalsBalance;
+    }
+    return b.totalPoints - a.totalPoints;
+  });
+  return sortLeader;
+};
+
+export { resultHome, resultAway, orderLeaderboard };

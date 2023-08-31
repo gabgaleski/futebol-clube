@@ -2,7 +2,7 @@ import MatchesModelSequelize from '../database/models/MatchesModelSequelize';
 import ICRUDLeaderboard from '../Interfaces/ICrudLeader';
 import ILeaderboard from '../Interfaces/ILeaderboard';
 import TeamsModelSequelize from '../database/models/TeamsModelSequelize';
-import { resultAway, resultHome } from '../utils/leaderboardHome';
+import { resultAway, resultHome, orderLeaderboard } from '../utils/leaderboardHome';
 
 export default class LeaderboardModel implements ICRUDLeaderboard<ILeaderboard> {
   private model = MatchesModelSequelize;
@@ -25,7 +25,7 @@ export default class LeaderboardModel implements ICRUDLeaderboard<ILeaderboard> 
     });
 
     const result = await Promise.all(getLeaderboard);
-    return result;
+    return orderLeaderboard(result);
   }
 
   async findAllAway(): Promise<ILeaderboard[]> {
@@ -45,6 +45,6 @@ export default class LeaderboardModel implements ICRUDLeaderboard<ILeaderboard> 
     });
 
     const result = await Promise.all(getLeaderboard);
-    return result;
+    return orderLeaderboard(result);
   }
 }
