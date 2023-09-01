@@ -1,10 +1,33 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# :hammer: Futebol Club :shield:
+
+<br>
+
+
+ 
+
+
+<br>
+
+# :clipboard: About
+O Projeto se trata de uma aplicação full stack onde foi incrementado a construção da API para o front-end, utilizando Typescript, node e sequelize, juntamente das 
+metodologias da Programação Orientada a Objetos, e SOLID. Na aplicação, é possivel ver os resultados das partidas, filtralos, logar em sua conta, mudar o status da partida,
+adicionar uma partida entre outras funções. Toda a aplicação é testada com Mocha, Jest, chai e sinon e utiliza de validações e criptografias junto do banco de dados MySQL
+
+
+<br>
+
+# :hammer_and_wrench: Skills & Tools
+
+- Node.js
+- Express
+- Sequelize
+- MySQL
+- Docker
+- Typescript
+- Mocha / chai / sinon
+- JWT
+- React
+- Javascript(ES6+)
+- Jest
+
+<br>
